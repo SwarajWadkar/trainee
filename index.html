@@ -201,21 +201,12 @@
             background: linear-gradient(135deg, #4a4a6a, #3a3a5a);
             color: #ddd;
             padding: 20px 50px;
-            cursor: not-allowed !important;
-            pointer-events: none !important;
-            opacity: 0.6;
-            transform: none !important;
-            transition: none !important;
-            user-select: none;
+            position: relative;
+            transition: transform 0.2s ease-out;
         }
 
         .no-option:hover {
             cursor: not-allowed !important;
-            transform: none !important;
-        }
-
-        .no-option:active {
-            transform: none !important;
         }
 
         /* Message screen */
@@ -680,37 +671,26 @@
             document.querySelector('#videoOverlay video').pause();
         });
 
-        // No button - completely disabled
-        noBtn.style.pointerEvents = 'none';
-        noBtn.style.cursor = 'not-allowed';
-        
-        noBtn.addEventListener('mouseover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
+        // No button moves away
+        noBtn.addEventListener('mouseover', () => {
+            const randomX = (Math.random() - 0.5) * 500;
+            const randomY = (Math.random() - 0.5) * 300;
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
         });
 
+        // Prevent click and move away
         noBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            e.stopImmediatePropagation();
             return false;
         });
 
+        // Mobile touch support
         noBtn.addEventListener('touchstart', (e) => {
+            const randomX = (Math.random() - 0.5) * 500;
+            const randomY = (Math.random() - 0.5) * 300;
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
             e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-
-        noBtn.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            return false;
-        });
-
-        noBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            return false;
         });
 
         // Play celebration sound
