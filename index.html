@@ -202,12 +202,19 @@
             color: #ddd;
             padding: 20px 50px;
             cursor: not-allowed !important;
-            pointer-events: none;
+            pointer-events: none !important;
             opacity: 0.6;
+            transform: none !important;
+            transition: none !important;
+            user-select: none;
         }
 
         .no-option:hover {
             cursor: not-allowed !important;
+            transform: none !important;
+        }
+
+        .no-option:active {
             transform: none !important;
         }
 
@@ -673,20 +680,35 @@
             document.querySelector('#videoOverlay video').pause();
         });
 
-        // No button moves away
-        noBtn.addEventListener('mouseover', () => {
-            return false;
-        });
-
-        // Prevent click and move away
-        noBtn.addEventListener('click', (e) => {
+        // No button - completely disabled
+        noBtn.style.pointerEvents = 'none';
+        noBtn.style.cursor = 'not-allowed';
+        
+        noBtn.addEventListener('mouseover', (e) => {
             e.preventDefault();
             e.stopPropagation();
             return false;
         });
 
-        // Mobile touch support
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        });
+
         noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        });
+
+        noBtn.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        noBtn.addEventListener('touchend', (e) => {
             e.preventDefault();
             return false;
         });
